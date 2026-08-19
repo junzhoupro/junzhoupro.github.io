@@ -44,30 +44,7 @@ const imageUrl = typeof image === 'string'
 ---
 
 <meta charset="utf-8" />
-<script is:inline data-cfasync="false">
-	(() => {
-		const root = document.documentElement;
-		const paintTheme = (theme) => {
-			const dark = theme === 'dark';
-			root.setAttribute('data-theme', dark ? 'dark' : 'light');
-			root.style.setProperty('background-color', 'var(--color-bg)');
-			root.style.colorScheme = dark ? 'dark' : 'light';
-		};
-		let theme = 'light';
-		try {
-			const s = localStorage.getItem('theme');
-			if (s === 'dark' || s === 'light') theme = s;
-			else if (matchMedia('(prefers-color-scheme: dark)').matches) theme = 'dark';
-		} catch {
-			if (matchMedia('(prefers-color-scheme: dark)').matches) theme = 'dark';
-		}
-		paintTheme(theme);
-		window.addEventListener('load', () => root.setAttribute('data-theme-ready', 'true'), { once: true });
-		window.__setPreferredTheme = paintTheme;
-	})();
-</script>
 <style is:inline>
-	/* CSS variables inline — available immediately in all modes (dev + prod), before any external CSS */
 	:root {
 		--color-bg: #f6f6f6;
 		--color-bg-offset: #ffe2e2;
@@ -76,23 +53,9 @@ const imageUrl = typeof image === 'string'
 		--color-text-muted: #8785a2;
 		--color-accent: #8785a2;
 		--color-border: #ffc7c7;
-	}
-	[data-theme='dark'] {
-		--color-bg: #8785a2;
-		--color-bg-offset: #8785a2;
-		--color-bg-header: rgba(135, 133, 162, 0.92);
-		--color-text-main: #f6f6f6;
-		--color-text-muted: #ffe2e2;
-		--color-accent: #ffc7c7;
-		--color-border: #ffc7c7;
+		color-scheme: light;
 	}
 	html, body { min-height: 100%; background-color: var(--color-bg); }
-	@media (prefers-color-scheme: dark) {
-		html:not([data-theme='light']), html:not([data-theme='light']) body { background-color: var(--color-bg); }
-	}
-	html[data-theme='dark'], html[data-theme='dark'] body { background-color: var(--color-bg); color-scheme: dark; }
-	html[data-theme='light'], html[data-theme='light'] body { background-color: var(--color-bg); color-scheme: light; }
-	/* Critical header layout — prevents FOUC before component CSS loads */
 	header {
 		position: sticky;
 		top: 0;
@@ -110,7 +73,6 @@ const imageUrl = typeof image === 'string'
 		height: 4.5rem;
 	}
 	header { background-color: var(--color-bg-header); }
-	/* Critical card backgrounds — prevents white flash in dark mode */
 	.project-card, .interactive-card, .pi-card, .collab-card, .team-card {
 		background-color: var(--color-bg-offset);
 		border-color: var(--color-border);
@@ -121,11 +83,6 @@ const imageUrl = typeof image === 'string'
 		background-color: var(--color-bg);
 		color: var(--color-text-main);
 		margin: 0;
-	}
-	/* Suppress all transitions until page is fully styled */
-	html:not([data-theme-ready]) *, html:not([data-theme-ready]) *::before, html:not([data-theme-ready]) *::after {
-		transition: none !important;
-		animation: none !important;
 	}
 </style>
 <meta name="viewport" content="width=device-width,initial-scale=1" />

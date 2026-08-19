@@ -7,9 +7,13 @@ import { defineConfig } from 'astro/config';
 import rehypeKatex from 'rehype-katex';
 import remarkMath from 'remark-math';
 
+const site = process.env.SITE || 'https://junzhoupro.github.io';
+const rawBase = process.env.BASE_PATH || '/';
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+
 export default defineConfig({
-	site: 'https://junzhoupro.github.io',
-	base: process.env.BASE_PATH || '/',
+	site,
+	base,
 	integrations: [
 		mdx(),
 		sitemap()

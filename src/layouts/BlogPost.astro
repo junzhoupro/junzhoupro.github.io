@@ -181,18 +181,6 @@ const fallbackHero = id ? url(`/blog/${id}.png`) : url('/og.png');
 					linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0));
 				scrollbar-color: rgba(148, 163, 184, 0.75) transparent;
 			}
-			html[data-theme='dark'] .prose :global(pre.astro-code) {
-				border-color: rgba(148, 163, 184, 0.24);
-				box-shadow: 0 20px 45px rgba(2, 6, 23, 0.4);
-			}
-			html[data-theme='dark'] .prose :global(pre.astro-code),
-			html[data-theme='dark'] .prose :global(pre.astro-code span) {
-				color: var(--shiki-dark) !important;
-				background-color: var(--shiki-dark-bg) !important;
-				font-style: var(--shiki-dark-font-style) !important;
-				font-weight: var(--shiki-dark-font-weight) !important;
-				text-decoration: var(--shiki-dark-text-decoration) !important;
-			}
 			.prose :global(pre.astro-code:focus-visible) {
 				outline: 2px solid var(--color-accent);
 				outline-offset: 3px;
@@ -575,11 +563,10 @@ const fallbackHero = id ? url(`/blog/${id}.png`) : url('/og.png');
 
 				const mermaidModule = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
 				const mermaid = mermaidModule.default;
-				const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
 				mermaid.initialize({
 					startOnLoad: false,
 					securityLevel: 'strict',
-					theme: isDark ? 'dark' : 'neutral',
+					theme: 'neutral',
 				});
 
 				for (const [index, pre] of blocks.entries()) {

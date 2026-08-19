@@ -24,4 +24,8 @@ Then open http://localhost:4321
 
 ## Deploy
 
-GitHub Actions builds on `master`/`main` and publishes the `gh-pages` branch. For the user site at `https://junzhoupro.github.io`, push this source to `junzhoupro/junzhoupro.github.io` (or copy the built `dist/` there) and set Pages to the `gh-pages` branch.
+GitHub Actions builds on `master`/`main` and publishes with the official Pages action.
+
+The live URL [https://junzhoupro.github.io](https://junzhoupro.github.io) comes from the user-site repo **`junzhoupro/junzhoupro.github.io`**. A repo named `junzhou.github.io` can only be served at `https://junzhoupro.github.io/junzhou.github.io/`.
+
+In **Settings → Pages**, set Source to **GitHub Actions** (not Jekyll).

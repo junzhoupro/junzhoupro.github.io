@@ -46,14 +46,14 @@ const imageUrl = typeof image === 'string'
 <meta charset="utf-8" />
 <style is:inline>
 	:root {
-		--color-bg: #f6f6f6;
-		--color-bg-offset: #ffe2e2;
-		--color-bg-header: rgba(246, 246, 246, 0.92);
-		--color-text-main: #8785a2;
-		--color-text-muted: #8785a2;
-		--color-accent: #8785a2;
+		--color-bg: #8785a2;
+		--color-bg-offset: #8785a2;
+		--color-bg-header: rgba(135, 133, 162, 0.92);
+		--color-text-main: #f6f6f6;
+		--color-text-muted: #ffe2e2;
+		--color-accent: #ffc7c7;
 		--color-border: #ffc7c7;
-		color-scheme: light;
+		color-scheme: dark;
 	}
 	html, body { min-height: 100%; background-color: var(--color-bg); }
 	header {
@@ -86,9 +86,9 @@ const imageUrl = typeof image === 'string'
 	}
 </style>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<link rel="shortcut icon" href={url('/favicon.ico')} type="image/x-icon" />
-<link rel="icon" href={url('/favicon.ico')} sizes="48x48" />
-<link rel="icon" type="image/svg+xml" href={url('/favicon.svg')} />
+<link rel="icon" href={url('/favicon.svg')} type="image/svg+xml" />
+<link rel="icon" href={url('/favicon.ico')} sizes="any" />
+<link rel="apple-touch-icon" href={url('/favicon.ico')} />
 <link rel="sitemap" href={url('/sitemap-index.xml')} />
 <link
 	rel="alternate"

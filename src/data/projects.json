@@ -1,0 +1,12 @@
+[
+  {
+    "id": "jewelry-relighting",
+    "title": "Jewelry Relighting in Virtual Try-on and Spectral Reconstruction",
+    "description": "Yale Graphics Group project on jewelry relighting in virtual try-on and spectral reconstruction, funded by TATA and Yale.",
+    "year": 2024,
+    "status": "Ongoing",
+    "authors": ["jun-zhou", "holly-rushmeier"],
+    "heroImage": "/papers/jewelry-relighting.png",
+    "link": "https://junzhoupro.github.io/jewelryrelighting/"
+  }
+]

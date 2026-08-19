@@ -1,0 +1,108 @@
+[
+  {
+    "id": "jun-zhou",
+    "name": "Jun Zhou",
+    "title": "Computer Graphics Researcher",
+    "role": "Author",
+    "bio": "Jun Zhou is a computer graphics researcher based in China. He was a Postdoc Associate at the Yale Graphics Group (2024–2026) and received his PhD from the University of Groningen in 2023. His research includes jewelry relighting in virtual try-on and spectral reconstruction, subdivision surfaces, and numerical quadratures for Gregory patches.",
+    "avatar": "/avatar.png",
+    "website": "https://junzhoupro.github.io/",
+    "github": "https://github.com/junzhoupro",
+    "linkedin": "https://www.linkedin.com/in/junzhou-ai",
+    "sortOrder": 0,
+    "alumni": false
+  },
+  {
+    "id": "holly-rushmeier",
+    "name": "Holly Rushmeier",
+    "title": "Professor of Computer Science",
+    "role": "Postdoctoral Advisor",
+    "bio": "Professor Holly Rushmeier leads the Yale Graphics Group. Jun Zhou's postdoctoral research on jewelry relighting in virtual try-on and spectral reconstruction was under her guidance.",
+    "website": "https://graphics.cs.yale.edu/people/holly-rushmeier",
+    "sortOrder": 1,
+    "alumni": false,
+    "isTeam": false
+  },
+  {
+    "id": "jiri-kosinka",
+    "name": "Jiří Kosinka",
+    "title": "Associate Professor",
+    "role": "PhD Advisor",
+    "bio": "Jiří Kosinka is Jun Zhou's PhD advisor at the University of Groningen, working in Scientific Visualization and Computer Graphics.",
+    "website": "https://www.cs.rug.nl/~kosinka/",
+    "sortOrder": 2,
+    "alumni": false,
+    "isTeam": false
+  },
+  {
+    "id": "jos-roerdink",
+    "name": "Jos B.T.M. Roerdink",
+    "title": "Professor of Computer Science",
+    "role": "PhD Advisor",
+    "bio": "Jos B.T.M. Roerdink was a PhD advisor of Jun Zhou at the University of Groningen.",
+    "website": "https://www.cs.rug.nl/~roe/",
+    "sortOrder": 3,
+    "alumni": false,
+    "isTeam": false
+  },
+  {
+    "id": "pieter-barendrecht",
+    "name": "Pieter J. Barendrecht",
+    "title": "Researcher",
+    "role": "Collaborator",
+    "bio": "Collaborator on numerical quadrature for Gregory triangles and Gregory quads.",
+    "sortOrder": 4,
+    "alumni": false,
+    "isTeam": false
+  },
+  {
+    "id": "michael-barton",
+    "name": "Michael Bartoň",
+    "title": "Researcher",
+    "role": "Collaborator",
+    "bio": "Collaborator on numerical quadrature for Gregory quads.",
+    "sortOrder": 5,
+    "alumni": false,
+    "isTeam": false
+  },
+  {
+    "id": "gerben-hettinga",
+    "name": "Gerben J. Hettinga",
+    "title": "Researcher",
+    "role": "Collaborator",
+    "bio": "Collaborator on feature-adaptive and hierarchical subdivision gradient meshes.",
+    "sortOrder": 6,
+    "alumni": false,
+    "isTeam": false
+  },
+  {
+    "id": "sietze-houwink",
+    "name": "Sietze Houwink",
+    "title": "Researcher",
+    "role": "Collaborator",
+    "bio": "Collaborator on feature-adaptive and hierarchical subdivision gradient meshes.",
+    "sortOrder": 7,
+    "alumni": false,
+    "isTeam": false
+  },
+  {
+    "id": "jan-boonstra",
+    "name": "Jan Boonstra",
+    "title": "Researcher",
+    "role": "Collaborator",
+    "bio": "Collaborator on semi-sharp subdivision shading.",
+    "sortOrder": 8,
+    "alumni": false,
+    "isTeam": false
+  },
+  {
+    "id": "kuanhao-he",
+    "name": "Kuanhao He",
+    "title": "Researcher",
+    "role": "Collaborator",
+    "bio": "Collaborator on the NWO ICT.OPEN 2023 poster.",
+    "sortOrder": 9,
+    "alumni": false,
+    "isTeam": false
+  }
+]

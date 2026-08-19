@@ -1,0 +1,226 @@
+---
+import type { ImageMetadata } from 'astro';
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { ALBUM_PHOTOS, SITE_TITLE } from '../consts';
+import { url } from '../utils/paths';
+
+const localPhotos = import.meta.glob<{ default: ImageMetadata }>(
+	'../assets/photos/*.{png,jpg,jpeg,webp}',
+	{ eager: true },
+);
+
+const resolveSrc = (src: string) => {
+	if (/^(https?:|\/)/.test(src)) return url(src);
+	const match = Object.entries(localPhotos).find(([path]) =>
+		path.replace(/\\/g, '/').endsWith(`/${src}`),
+	);
+	if (!match) {
+		throw new Error(`Album photo not found: ${src}. Put it in src/assets/photos/.`);
+	}
+	return match[1].default.src;
+};
+
+const listed = ALBUM_PHOTOS.map((photo) => ({
+	...photo,
+	href: resolveSrc(photo.src),
+	key: photo.src,
+}));
+
+const listedKeys = new Set(listed.map((photo) => photo.key.replace(/\\/g, '/')));
+const extras = Object.entries(localPhotos)
+	.map(([path, mod]) => {
+		const filename = path.replace(/\\/g, '/').split('/').pop() ?? path;
+		return {
+			src: filename,
+			alt: 'Jun Zhou',
+			caption: undefined as string | undefined,
+			href: mod.default.src,
+			key: filename,
+		};
+	})
+	.filter((photo) => !listedKeys.has(photo.key) && photo.key.toLowerCase() !== 'selfie.png')
+	.sort((a, b) => a.key.localeCompare(b.key, undefined, { numeric: true }));
+
+const photos = [...listed, ...extras];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`Album | ${SITE_TITLE}`} description="Personal photos of Jun Zhou." />
+		<style>
+			.album-hero {
+				text-align: center;
+				margin-bottom: 2.5rem;
+				padding: 1rem 0 0;
+			}
+			.album-hero h1 {
+				font-family: var(--font-serif);
+				font-size: 3rem;
+				margin: 0 0 0.75rem;
+				letter-spacing: -0.02em;
+			}
+			.album-hero p {
+				margin: 0 auto;
+				max-width: 36rem;
+				color: var(--color-text-muted);
+				font-size: 1.1rem;
+				line-height: 1.7;
+			}
+			.album-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+				gap: 1.25rem;
+			}
+			.album-card {
+				margin: 0;
+				padding: 0;
+				border: 1px solid var(--color-border);
+				border-radius: 16px;
+				overflow: hidden;
+				background: var(--color-bg-offset);
+				cursor: pointer;
+				text-align: left;
+				font: inherit;
+				color: inherit;
+				box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+				transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+			}
+			.album-card:hover,
+			.album-card:focus-visible {
+				transform: translateY(-4px);
+				border-color: var(--color-accent);
+				box-shadow: var(--shadow-lg);
+				outline: none;
+			}
+			.album-card img {
+				display: block;
+				width: 100%;
+				aspect-ratio: 4 / 5;
+				object-fit: cover;
+			}
+			.album-card figcaption {
+				padding: 0.7rem 0.9rem 0.9rem;
+				font-size: 0.9rem;
+				color: var(--color-text-muted);
+			}
+			.lightbox {
+				display: none;
+				position: fixed;
+				inset: 0;
+				z-index: 400;
+				background: color-mix(in srgb, var(--color-text-main) 72%, transparent);
+				align-items: center;
+				justify-content: center;
+				padding: 2rem 1rem;
+			}
+			.lightbox.open {
+				display: flex;
+			}
+			.lightbox img {
+				max-width: min(92vw, 960px);
+				max-height: 86vh;
+				object-fit: contain;
+				border-radius: 12px;
+				box-shadow: var(--shadow-lg);
+			}
+			.lightbox-close,
+			.lightbox-nav {
+				position: absolute;
+				border: none;
+				background: var(--color-bg);
+				color: var(--color-text-main);
+				width: 2.6rem;
+				height: 2.6rem;
+				border-radius: 50%;
+				cursor: pointer;
+				font-size: 1.4rem;
+				line-height: 1;
+			}
+			.lightbox-close {
+				top: 1.2rem;
+				right: 1.2rem;
+			}
+			.lightbox-nav.prev {
+				left: 1.2rem;
+			}
+			.lightbox-nav.next {
+				right: 1.2rem;
+			}
+			@media (max-width: 640px) {
+				.album-hero h1 { font-size: 2.3rem; }
+				.album-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.8rem; }
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<div class="album-hero">
+				<h1>Album</h1>
+				<p>A few personal photos. Click any picture to view it larger.</p>
+			</div>
+
+			<div class="album-grid" data-album>
+				{photos.map((photo, i) => (
+					<button
+						type="button"
+						class="album-card"
+						data-index={String(i)}
+						aria-label={photo.caption ?? photo.alt}
+					>
+						<figure>
+							<img src={photo.href} alt={photo.alt} loading={i < 4 ? 'eager' : 'lazy'} />
+							{photo.caption && <figcaption>{photo.caption}</figcaption>}
+						</figure>
+					</button>
+				))}
+			</div>
+		</main>
+		<Footer />
+
+		<div class="lightbox" data-lightbox>
+			<button type="button" class="lightbox-close" aria-label="Close">&times;</button>
+			<button type="button" class="lightbox-nav prev" aria-label="Previous photo">‹</button>
+			<img alt="" />
+			<button type="button" class="lightbox-nav next" aria-label="Next photo">›</button>
+		</div>
+
+		<script define:vars={{ photos }}>
+			const srcs = photos.map((p) => ({ href: p.href, alt: p.alt }));
+			const lightbox = document.querySelector('[data-lightbox]');
+			const img = lightbox?.querySelector('img');
+			if (lightbox && img && srcs.length) {
+				let index = 0;
+				const show = (next) => {
+					index = (next + srcs.length) % srcs.length;
+					img.src = srcs[index].href;
+					img.alt = srcs[index].alt;
+				};
+				const open = (i) => {
+					show(i);
+					lightbox.classList.add('open');
+				};
+				const close = () => lightbox.classList.remove('open');
+
+				document.querySelectorAll('[data-album] .album-card').forEach((card) => {
+					card.addEventListener('click', () => open(Number(card.dataset.index)));
+				});
+				lightbox.querySelector('.lightbox-close')?.addEventListener('click', close);
+				lightbox.querySelector('.prev')?.addEventListener('click', () => show(index - 1));
+				lightbox.querySelector('.next')?.addEventListener('click', () => show(index + 1));
+				lightbox.addEventListener('click', (e) => {
+					if (e.target === lightbox) close();
+				});
+				document.addEventListener('keydown', (e) => {
+					if (!lightbox.classList.contains('open')) return;
+					if (e.key === 'Escape') close();
+					if (e.key === 'ArrowLeft') show(index - 1);
+					if (e.key === 'ArrowRight') show(index + 1);
+				});
+			}
+		</script>
+	</body>
+</html>

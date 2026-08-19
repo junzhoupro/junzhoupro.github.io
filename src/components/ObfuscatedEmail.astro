@@ -1,0 +1,24 @@
+---
+import { CONTACT } from '../consts';
+---
+
+<span class="obfuscated-email" title="Replace [at] and [dot] to email me">
+	<span>{CONTACT.emailUser}</span>
+	<span class="email-sep"> [at] </span>
+	<span>{CONTACT.emailHost}</span>
+	<span class="email-sep"> [dot] </span>
+	<span>{CONTACT.emailTld}</span>
+</span>
+
+<style>
+	.obfuscated-email {
+		user-select: none;
+		-webkit-user-select: none;
+		cursor: default;
+		letter-spacing: 0.01em;
+	}
+	.email-sep {
+		opacity: 0.75;
+		font-style: italic;
+	}
+</style>

@@ -1,0 +1,36 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PublicationItem from '../components/PublicationItem.astro';
+import { SITE_TITLE } from '../consts';
+import bibFileRaw from '../data/publications.bib?raw';
+import { parseBibTeX, sortByYear } from '../utils/bibtex';
+
+const publications = sortByYear(parseBibTeX(bibFileRaw));
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`Publications | ${SITE_TITLE}`} description="Academic Publications" />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>Publications</h1>
+			<p>Peer-reviewed journal articles, conference papers, and posters. Titles link to the publisher page.</p>
+
+			<div class="publication-list">
+				{publications.map((entry) => (
+					<PublicationItem entry={entry} />
+				))}
+
+				{publications.length === 0 && (
+					<p>No publications found.</p>
+				)}
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>

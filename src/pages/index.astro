@@ -1,0 +1,120 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PublicationItem from '../components/PublicationItem.astro';
+import PhotoCarousel from '../components/PhotoCarousel.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { getCollection } from 'astro:content';
+import bibFileRaw from '../data/publications.bib?raw';
+import { parseBibTeX, sortByYear } from '../utils/bibtex';
+import { url } from '../utils/paths';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+).slice(0, 3);
+
+const publications = sortByYear(parseBibTeX(bibFileRaw)).slice(0, 3);
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+			.hero {
+				display: flex;
+				align-items: center;
+				gap: 4rem;
+				padding: 4rem 0;
+				margin-bottom: 2rem;
+			}
+			.hero-content { flex: 3; }
+			.hero-image {
+				flex: 2;
+				display: flex;
+				justify-content: center;
+				position: relative;
+			}
+			.hero-buttons {
+				display: flex;
+				gap: 1rem;
+				flex-wrap: wrap;
+			}
+			.advisor-link {
+				font-weight: 600;
+			}
+			@media (max-width: 768px) {
+				.hero { flex-direction: column-reverse; text-align: center; padding: 2rem 0; gap: 2rem; }
+				.hero-buttons { justify-content: center; }
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="hero">
+				<div class="hero-content">
+					<h1 style="margin-bottom: 0.5rem; font-size: 3rem;">Jun Zhou <span class="streamline-emojis--woman-2" aria-hidden="true"></span></h1>
+					<h2 style="font-weight: 400; color: var(--color-text-muted); margin-bottom: 1.5rem; font-family: var(--font-sans); text-transform: uppercase; letter-spacing: 0.05em; font-size: 1rem; border-bottom: none; padding-bottom: 0; display: block; margin-top: 0;">
+						Computer Graphics Researcher<br/>
+						Based in China
+					</h2>
+					<p style="font-size: 1.1rem; line-height: 1.7; margin-bottom: 2rem;">
+						I am a computer graphics researcher currently working in China. From 2024 to 2026 I was a Postdoc Associate at the Yale Graphics Group, where I worked on jewelry relighting in virtual try-on and spectral reconstruction, under the guidance of
+						<a class="advisor-link" href="https://graphics.cs.yale.edu/people/holly-rushmeier" target="_blank" rel="noopener noreferrer">Prof. Holly Rushmeier</a>.
+						I earned my PhD in Computer Graphics from the University of Groningen in 2023, advised by
+						<a class="advisor-link" href="https://www.cs.rug.nl/~kosinka/" target="_blank" rel="noopener noreferrer">Prof. Jiří Kosinka</a>
+						and
+						<a class="advisor-link" href="https://www.cs.rug.nl/~roe/" target="_blank" rel="noopener noreferrer">Prof. Jos B.T.M. Roerdink</a>.
+					</p>
+					<div class="hero-buttons">
+						<a href={url('/publications')} class="btn">View Publications</a>
+						<a href={url('/projects')} class="btn btn-outline">Current Projects</a>
+					</div>
+				</div>
+				<div class="hero-image">
+					<PhotoCarousel size="lg" />
+				</div>
+			</section>
+
+			<hr style="margin: 3rem 0; border-top: 1px solid var(--color-border);" />
+
+			<div class="grid-2" style="gap: 4rem; margin-top: 0;">
+				<section>
+					<h2 style="margin-top: 0;">Selected Publications</h2>
+					<div class="publication-list">
+						{publications.length > 0 ? publications.map((pub) => (
+							<PublicationItem entry={pub} compact={true} />
+						)) : <p>No publications found.</p>}
+					</div>
+					<div style="margin-top: 1.5rem;">
+						<a href={url('/publications')} style="font-weight: 600;">View Full List &rarr;</a>
+					</div>
+				</section>
+
+				<section>
+					<h2 style="margin-top: 0;">News</h2>
+					<ul style="list-style: none; padding: 0;">
+						{posts.map((post) => (
+							<li style="margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px dashed var(--color-border);">
+								<a href={url(`/blog/${post.id}/`)} style="display: block; font-family: var(--font-serif); font-size: 1.1rem; font-weight: 600; color: var(--color-text-main); margin-bottom: 0.25rem;">
+									{post.data.title}
+								</a>
+								<small style="color: var(--color-text-muted); text-transform: uppercase; font-size: 0.8rem;">
+									{post.data.pubDate.toLocaleDateString('en-us', {
+										year: 'numeric',
+										month: 'short',
+										day: 'numeric',
+									})}
+								</small>
+							</li>
+						))}
+					</ul>
+					<a href={url('/blog')} style="font-weight: 600;">View Blog &rarr;</a>
+				</section>
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>

@@ -10,7 +10,6 @@ export async function getStaticPaths() {
     // Base static pages
     const staticPages = [
         { params: { route: 'og' }, props: { title: SITE_TITLE, subtitle: SITE_DESCRIPTION } },
-        { params: { route: 'album' }, props: { title: 'Album', subtitle: SITE_TITLE } },
         { params: { route: 'projects' }, props: { title: 'Projects', subtitle: SITE_TITLE } },
         { params: { route: 'publications' }, props: { title: 'Publications', subtitle: SITE_TITLE } },
         { params: { route: 'blog' }, props: { title: 'Blog', subtitle: SITE_TITLE } },

@@ -34,6 +34,6 @@ export default defineConfig({
 		inlineStylesheets: 'always',
 	},
 	redirects: {
-		'/about': '/album',
+		'/about': '/',
 	},
 });
